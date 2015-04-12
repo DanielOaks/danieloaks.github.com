@@ -1,0 +1,28 @@
+---
+layout: default
+---
+<div class="head" style="border-bottom: {{ page.head_border }} 0.4rem solid; background-image: {% if page.head_gradient_direction == 'leftright' %}linear-gradient{% else %}radial-gradient{% endif %}({% if page.head_gradient_direction == 'leftright' %}to right, {% endif %}{% for color in page.head_colours %}{{ color }}{% if forloop.last == false %},{% endif %}{% endfor %});">
+    <img class="logo" src="{{ site.base_addr }}{{ page.head_logo }}" style="{% if page.head_logo_margin %}margin: {{ page.head_logo_margin }};{% endif %}{% if page.head_logo_max_height %} max-height: {{ page.head_logo_max_height }};{% endif %}"/>
+</div>
+
+{% if page.links or page.local_links %}
+    <div class="link-list">
+    {% for link in page.local_links %}
+        <a href="{{ site.base_addr }}{{ link[1] }}">{{ link[0] }}</a>
+    {% endfor %}
+    {% for link in page.links %}
+        <a href="{{ link[1] }}">{{ link[0] }}</a>
+    {% endfor %}
+    </div>
+{% endif %}
+
+{{ content }}
+
+{% if page.screenshots %}
+    {% for screenshot in page.screenshots %}
+<{% if screenshot.url %}a href="{{ screenshot.url }}"{% else if screenshot.local_url %}a href="{{ site.base_addr }}{{ screenshot.local_url }}"{% else %}div{% endif %} class="screenshot" title="{{ screenshot.title }}">
+    <h1>{{ screenshot.title }}</h1>
+    <img src="{{ site.base_addr }}{{ screenshot.src }}"/>
+</{% if screenshot.url or screenshot.local_url %}a{% else %}div{% endif %}>
+    {% endfor %}
+{% endif %}

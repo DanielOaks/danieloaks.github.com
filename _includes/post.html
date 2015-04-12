@@ -1,0 +1,17 @@
+{% if post.post_layout == 'music' %}
+<div class="postlink music">
+{{ post.embed }}
+</div>
+{% else %}
+<a href="{{ site.base_addr }}{{ post.url }}" class="postlink {{ post.post_layout }}" style="border: {{ post.head_border }} 0.4rem solid; background-image: {% if post.head_gradient_direction == 'leftright' %}linear-gradient{% else %}radial-gradient{% endif %}({% if post.head_gradient_direction == 'leftright' %}to right, {% endif %}{% for color in post.head_colours %}{{ color }}{% if forloop.last == false %},{% endif %}{% endfor %});{% if post.post_text_color %}color: {{ post.post_text_color }};{% endif %}{% if post.post_logo_max_height %}max-height: {{ post.post_logo_max_height }};{% endif %}" title="{{ post.short_description }}">
+    <img class="logo" src="{{ site.base_addr }}{{ post.head_logo }}"/>
+    <div class="content">
+        {% if post.post_content_image %}
+        <img alt="{{ post.short_description }}" src="{{ site.base_addr }}{{ post.post_content_image }}"/>
+        <span class="alt-text">{{ post.short_description }}</span>
+        {% else %}
+        {{ post.short_description }}
+        {% endif %}
+    </div>
+</a>
+{% endif %}

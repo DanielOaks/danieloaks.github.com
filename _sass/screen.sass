@@ -1,0 +1,313 @@
+// Daniel Oaks SCSS
+@import compass/reset
+@import compass
+
+@import standard_defs
+@import defs
+
+$white: #f7f7f7
+$light-test-color: #223
+
+$std-width: 60rem
+$std-margin: 2rem
+$content-margin: 8rem
+$footer-height: 3rem
+
+$tight-border-radius: 0.3rem
+
+$delicious-font-stack: Delicious, Helvetica Neue, Arial, sans-serif
+$smallcaps-font-stack: Delicious-Small-Caps, Delicious, Helvetica Neue, Arial, sans-serif
+$body-font-stack: Helvetica Neue, Arial, sans-serif
+$copy-font-stack: Georgia, Times, Times New Roman, serif
+
+// overall
+html
+    box-sizing: border-box
+*, *:before, *:after
+    box-sizing: inherit
+
+html, body
+    width: 100%
+    height: 100%
+
+a
+    text-decoration: none
+
+// sticky footer
+#main-wrap
+    min-height: calc(100% - #{$footer-height})
+
+// layout
+.wrap
+    width: 100%
+    > .inside
+        max-width: $std-width
+        width: 100%
+        margin: 0 auto
+        padding: 1rem $std-margin
+        min-height: 100%
+#content-wrap > .inside
+    @include respond-to(desktop)
+        padding: 2rem 2rem !important
+    @include respond-to(mobile)
+        padding: 1.2rem 1rem !important
+
+body
+    background: #507082
+    font-family: $body-font-stack
+
+.bg-stripe
+    position: fixed
+    z-index: -999
+    background: rgba(230,230,230,0.3)
+    height: 100%
+    width: 0.5rem
+    top: 0
+    &#content-stripe-1
+        left: calc((100% / 2) - (#{$std-width} / 2) - 1.05rem)
+    &#content-stripe-2
+        left: calc((100% / 2) + (#{$std-width} / 2) + 0.55rem)
+
+#main-wrap
+    display: flex
+    flex-direction: column
+
+#header-wrap
+    background: #274961
+    > .inside
+        padding: 0 $std-margin
+        .top
+            display: flex
+            @include respond-to(desktop)
+                flex-direction: column
+            @include respond-to(mobile)
+                flex-direction: column
+            .logo
+                padding: 0.44rem 0
+                font-family: $delicious-font-stack
+                font-size: 3.2rem
+                font-weight: 900
+                @include font-smoothing()
+                > a
+                    color: $white
+            .tabs
+                flex-grow: 1
+                display: flex
+                vertical-align: bottom
+                margin-left: 1rem
+                flex-wrap: wrap
+                .tab
+                    display: inline-block
+                    padding: 0.5rem 0.73rem
+                    margin-top: auto
+                    height: 1.1rem + 1rem + 0.4rem
+                    margin-left: 1rem
+                    background: #eee
+                    font-size: 1.1rem
+                    color: #274961
+                    font-family: $smallcaps-font-stack
+                    border-bottom: 0.4rem rgba(20,20,20,0.24) solid
+                    position: relative
+                    bottom: 0
+                    transition: bottom 80ms
+                    z-index: 1
+
+                    &.active
+                        margin-top: auto
+                        height: 1.1rem + 1rem
+                        border-bottom: none
+                    &.portfolio
+                        background-color: #c0ffb6
+                    &.code
+                        background-color: #c9f8ff
+                    &.design
+                        background-color: #ffedB6
+                    &.music
+                        background-color: #d6e8ff
+                    &.contact
+                        background-color: #d6fff9
+
+                    &:not(.active):hover
+                        bottom: -0.4rem
+                        @include respond-to(mobile)
+                            bottom: 0
+
+                @include respond-to(mobile)
+                    margin-left: 0
+                    padding-bottom: 0.3rem
+                    .tab
+                        padding: 0.5rem
+                        margin: 0.2rem
+                        flex-grow: 1
+                        text-align: center
+                        border-bottom: none
+                        border-radius: 0.25rem
+                        height: 1.1rem + 1rem
+                        + .tab
+                            margin-left: 0.4rem
+#subtitle-wrap
+    @include respond-to(mobile)
+        height: 0
+    z-index: 2
+    border-bottom: 0.1rem #1f3d2a solid
+    &.portfolio
+        background-color: #9bf2a3
+        border-top: 0.4rem #c0ffb6 solid
+    &.code
+        background-color: #b8e8f8
+        border-top: 0.4rem #c9f8ff solid
+    &.design
+        background-color: #f0d9ab
+        border-top: 0.4rem #ffedb6 solid
+    &.music
+        background-color: #c1d9f9
+        border-top: 0.4rem #d6e8ff solid
+    &.contact
+        background-color: #b2edeb
+        border-top: 0.4rem #d6fff9 solid
+    > .inside
+        padding: 0.23rem $std-margin
+        text-align: center
+        font-family: $smallcaps-font-stack
+        a
+            color: #2a5090
+            margin: 0 2rem
+
+#content-wrap
+    z-index: 3
+    min-height: 2rem
+    flex-grow: 1
+    > .inside
+        height: 100%
+        padding: 2rem $content-margin
+        background: $white
+        > .head
+            margin: -2rem -1rem 1rem
+            @include respond-to(desktop)
+                margin: -2rem -2rem 1rem
+            @include respond-to(large)
+                margin: -2rem -#{$content-margin} 1rem
+            padding: 1rem 3rem
+            @include respond-to(mobile)
+                margin-top: -1.2rem
+                padding: 1rem
+            @include background-image(linear-gradient(#ddd, #eee, #ddd))
+            border-bottom: 0.4rem #ccc solid
+            text-align: center
+            .logo
+                max-width: $std-width - 17rem
+                @include respond-to(mobile)
+                    max-width: 100%
+        p
+            font-size: 1.1rem
+            line-height: 1.2
+            font-family: $copy-font-stack
+        a
+            font-style: italic
+            color: #0b357d
+
+        img
+            max-width: 100%
+            &.right
+                float: right
+                margin: -0.5rem 0 0.5rem 1rem
+                max-width: 10rem
+
+        .link-list
+            float: right
+            padding: 0.6rem 1rem
+            margin: 0 0 0.5rem 1rem
+            background: #e9edf0
+            border-radius: $tight-border-radius
+            a
+                display: block
+                font-style: normal
+                font-family: $smallcaps-font-stack
+                + a
+                    margin-top: 0.4rem
+
+        .screenshot
+            display: block
+            margin: 2rem 0 1rem
+            @include respond-to(large)
+                margin: 2rem -2.5rem 1rem
+            padding: 0.8rem 1rem
+            border-radius: $tight-border-radius
+            background: #dedede
+            color: #274961
+            font-family: $delicious-font-stack
+            h1
+                padding: 0 0 0.8rem 1rem
+                font-size: 1.1rem
+            img
+                border-radius: $tight-border-radius
+
+        .postlink
+            display: flex
+            padding: 1rem 1.3rem
+            @include background-image(linear-gradient(#ddd, #eee, #ddd))
+            border: 0.4rem #ccc solid
+            border-radius: $tight-border-radius
+            color: $light-test-color
+            font-style: normal
+            font-size: 1.2rem
+            align-items: center
+            + .postlink
+                margin-top: 2rem
+
+            &.music
+                padding: 0
+                border-color: #ffe9d6
+                > iframe
+                    border-radius: 2px
+
+            &.topdown
+                flex-direction: column
+                .logo
+                    display: block
+                    max-width: 80%
+                    margin: 0 auto 0.5rem
+
+            &.leftright
+                .logo, .content
+                    flex-grow: 1
+                .logo
+                    width: 50%
+                .content
+                    width: 50%
+                    margin: 0 0.8rem 0 1rem
+                    vertical-align: center
+
+            .content .alt-text
+                display: none
+
+            @include respond-to(mobile)
+                max-height: none !important
+                &.topdown, &.leftright
+                    flex-direction: column
+                    .logo, .content
+                        display: block
+                        max-width: 95%
+                        width: 95%
+                        margin: 0 auto 0.5rem
+                    .logo
+                        max-height: 9rem
+                    .content img
+                        display: none
+                    .content .alt-text
+                        display: block
+
+#footer-wrap
+    height: $footer-height
+    background: #274961
+    > .inside
+        margin: 0 auto
+        text-align: center
+        color: $white
+        > a
+            color: $white
+            font-style: italic
+            padding: 0 1rem
+            transition: color 0.2s
+            &:hover
+                color: #cdf

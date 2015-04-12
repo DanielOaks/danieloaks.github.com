@@ -1,0 +1,15 @@
+---
+layout: default
+---
+
+{% for weight in (1...site.max_weight) %}
+    {% for post in site.categories[page.category] %}
+        {% if post.weight == weight %}
+            {% include post.html %}
+        {% elsif weight == site.max_weight %}
+            {% if post.weight == nil %}
+                {% include post.html %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}

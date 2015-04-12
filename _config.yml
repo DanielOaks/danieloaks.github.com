@@ -1,0 +1,32 @@
+# Include the nojekyll in output
+include:
+  - .nojekyll
+
+# Files/Folders to exclude from the final output
+exclude:
+  - config.rb
+  - .sass-cache
+
+# Enable Pagination, because we're awesome like that
+paginate: 8
+paginate_path: page/:num
+
+permalink: /:title/
+
+# And building into custom directory
+highlighter: pygments
+markdown: kramdown
+
+# tabs on top of the page
+standard_category: portfolio
+nav_tabs:
+  - Portfolio
+  - Code
+  - Design
+  - Music
+
+# base site
+# base_addr: /site-in-dev
+
+# because sorting doesn't work
+max_weight: 10

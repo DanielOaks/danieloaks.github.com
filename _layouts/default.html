@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+        <title>{{ page.title }}</title>
+        
+        <!-- Homepage CSS -->
+        <link href="{{ site.base_addr }}/fonts/delicious.css" rel="stylesheet" type="text/css" />
+
+        <link href="{{ site.base_addr }}/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="{{ site.base_addr }}/css/print.css" media="print" rel="stylesheet" type="text/css" />
+        <!--[if IE]>
+            <link href="{{ site.base_addr }}/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <![endif]-->
+
+        <meta charset='utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ site.base_addr }}/img/favicons/apple-touch-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ site.base_addr }}/img/favicons/apple-touch-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ site.base_addr }}/img/favicons/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ site.base_addr }}/img/favicons/apple-touch-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ site.base_addr }}/img/favicons/apple-touch-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ site.base_addr }}/img/favicons/apple-touch-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ site.base_addr }}/img/favicons/apple-touch-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ site.base_addr }}/img/favicons/apple-touch-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ site.base_addr }}/img/favicons/apple-touch-icon-180x180.png">
+        <link rel="icon" type="image/png" href="{{ site.base_addr }}/img/favicons/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="{{ site.base_addr }}/img/favicons/favicon-194x194.png" sizes="194x194">
+        <link rel="icon" type="image/png" href="{{ site.base_addr }}/img/favicons/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="{{ site.base_addr }}/img/favicons/android-chrome-192x192.png" sizes="192x192">
+        <link rel="icon" type="image/png" href="{{ site.base_addr }}/img/favicons/favicon-16x16.png" sizes="16x16">
+        <link rel="manifest" href="{{ site.base_addr }}/img/favicons/manifest.json">
+        <link rel="shortcut icon" href="{{ site.base_addr }}/img/favicons/favicon.ico">
+        <meta name="msapplication-TileColor" content="#ecf0ff">
+        <meta name="msapplication-TileImage" content="{{ site.base_addr }}/img/favicons/mstile-144x144.png">
+        <meta name="msapplication-config" content="{{ site.base_addr }}/img/favicons/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+
+        <script>
+            /* Google Analytics JS */
+        </script>
+    </head>
+    <body>
+        <div class="bg-stripe" id="content-stripe-1"></div>
+        <div class="bg-stripe" id="content-stripe-2"></div>
+        <div id="main-wrap">
+            <div id="header-wrap" class="wrap">
+                <div class="inside">
+                    <div class="top">
+                        <div class="logo"><a href="{{ site.base_addr }}/">Daniel Oaks</a></div>
+                        <div class="tabs">
+                            {% for tab_type in site.nav_tabs %}
+                                {% capture lower_tab_type %}{{ tab_type | slugify }}{% endcapture %}
+                                <a class="tab {% if lower_tab_type == page.current_category %}active {% endif %}{{ tab_type | slugify }}" href="{{ site.base_addr }}/categories/{{ lower_tab_type }}">{{ tab_type }}</a>
+                            {% endfor %}
+                            <a class="tab {% if page.current_category == 'contact' %}active {% endif %}contact" title="Daniel Oaks' Email Address" href="{{ site.base_addr }}/contact">Contact</a>
+                        </div>
+                    </div>
+                    <div class="subtitle">
+
+                    </div>
+                </div>
+            </div>
+            <div id="subtitle-wrap" class="wrap {{ page.current_category }}">
+                <div class="inside">
+                    {% for sublink in site.categories[page.current_category] limit:4 %}
+                    <a href="{{ site.base_addr }}{{ sublink.url }}">{{ sublink.title }}</a>
+                    {% endfor %}
+                    {% if page.subtitle_links %}
+                        {% for link in page.subtitle_links %}
+                            <a href="{{ link[1] }}">{{ link[0] }}</a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div id="content-wrap" class="wrap">
+                <div class="inside">
+                    {{ content }}
+                </div>
+            </div>
+        </div>
+        <div id="footer-wrap" class="wrap">
+            <div class="inside">
+                Copyright &copy; 2015 Daniel Oaks
+                <!-- <a href="{{ site.base_addr }}/contact">Contact</a> -->
+            </div>
+        </div>
+    </body>
+</html>
