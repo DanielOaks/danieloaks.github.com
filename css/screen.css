@@ -123,8 +123,9 @@ body { background: #507082; font-family: Helvetica Neue, Arial, sans-serif; }
 #content-wrap > .inside .postlink.music > iframe { border-radius: 2px; }
 #content-wrap > .inside .postlink.topdown { flex-direction: column; }
 #content-wrap > .inside .postlink.topdown .logo { display: block; max-width: 80%; margin: 0 auto 0.5rem; }
-#content-wrap > .inside .postlink.leftright .logo, #content-wrap > .inside .postlink.leftright .content { flex-grow: 1; }
-#content-wrap > .inside .postlink.leftright .logo { width: 50%; }
+#content-wrap > .inside .postlink.leftright .logo, #content-wrap > .inside .postlink.leftright .wordmark, #content-wrap > .inside .postlink.leftright .content { flex-grow: 1; }
+#content-wrap > .inside .postlink.leftright .logo, #content-wrap > .inside .postlink.leftright .wordmark { width: 50%; }
+#content-wrap > .inside .postlink.leftright .wordmark { font-weight: bold; text-align: center; font-size: 1.5rem; }
 #content-wrap > .inside .postlink.leftright .content { width: 50%; margin: 0 0.8rem 0 1rem; vertical-align: center; }
 #content-wrap > .inside .postlink .content .alt-text { display: none; }
 @media only screen and (max-width: 40rem) { #content-wrap > .inside .postlink { max-height: none !important; }
