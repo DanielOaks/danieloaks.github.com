@@ -1,3 +1,6 @@
+# plugins
+gems: [jekyll-paginate]
+
 # Include the nojekyll in output
 include:
   - .nojekyll
