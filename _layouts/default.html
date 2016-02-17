@@ -64,7 +64,11 @@
             <div id="subtitle-wrap" class="wrap {{ page.current_category }}">
                 <div class="inside">
                     {% for sublink in site.categories[page.current_category] limit:4 %}
+                    {% if sublink.directurl %}
+                    <a href="{{ sublink.directurl }}">{{ sublink.title }}</a>
+                    {% else %}
                     <a href="{{ site.base_addr }}{{ sublink.url }}">{{ sublink.title }}</a>
+                    {% endif %}
                     {% endfor %}
                     {% if page.subtitle_links %}
                         {% for link in page.subtitle_links %}
