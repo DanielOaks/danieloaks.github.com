@@ -12,7 +12,7 @@ sub
     vertical-align: sub
 
 $mono-font-stack: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace
-code, code.regex
+pre, code, code.regex
     font-family: $mono-font-stack
 
 // fenced code block
@@ -22,6 +22,11 @@ pre
     border-radius: 0.5rem
     background: #ffb
     page-break-inside: avoid
+    max-width: 100%
+    overflow-x: auto
+    + p > code.regex
+        display: block
+        margin-top: 1.5rem
 
 // inline code block
 code.highlighter-rouge
@@ -34,7 +39,7 @@ code.highlighter-rouge
 
 hr
     @media screen
-        border: #507082 0.2rem solid
+        border: rgba(73, 109, 129, 0.58) 0.2rem solid
         border-radius: 2rem
         margin: 1.55rem auto
     @media print
@@ -55,7 +60,7 @@ h3
 h4
     font-size: 1.175rem
     margin-top: 0.75rem
-    margin-bottom: 0.2rem
+    margin-bottom: 0.25rem
 
 ol, ul
     margin: 1rem 0 1rem 2rem
