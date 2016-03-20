@@ -105,13 +105,23 @@
 
 
 
-<p>First off, regex alone can’t split arbitrary IRC messages into seperate parts ready to be consumed and evaluted by other code. It simply cannot do that with the restrictions placed upon it (particularly, not allowing recursive matches), despite most other IRC message-splitting regexes trying to do just that. That’s why I call this <strong>‘Less-Wrong’</strong>.</p>
+<p>First off, regex alone can’t split arbitrary IRC messages into seperate parts ready to be consumed and evaluted by other code. It simply cannot do that with the restrictions placed upon it (particularly, not allowing recursive matches), despite most other IRC message-splitting regexes trying to do just that. You will need to have other code post-process the matches this produces – however, it does work!</p>
 
-<p>I’ve created this regex to match and evaluate arbitrary IRC messages:</p>
+<hr />
+
+<p>Here is the regex to match arbitrary IRC messages, first raw and then highlighted:</p>
+
+<pre>
+^(?:@([^\r\n ]*) +|())(?::([^\r\n ]+) +|())([^\r\n ]+)(?: +([^:\r\n ]+[^\r\n ]*(?: +[^:\r\n ]+[^\r\n ]*)*)|())?(?: +:([^\r\n]*)| +())?[\r\n]*$
+</pre>
 
 <p><code class="regex">
 ^(?:@([^\r\n ]*) +|())(?::([^\r\n ]+) +|())([^\r\n ]+)(?: +([^:\r\n ]+[^\r\n ]*(?: +[^:\r\n ]+[^\r\n ]*)*)|())?(?: +:([^\r\n]*)| +())?[\r\n]*$
 </code></p>
+
+<p>Here is an <a href="https://regex101.com/r/lL5rW3/1">online example</a> of this regex matching IRC messages, and here is the raw regex and our sample IRC messages in a <a href="https://gist.github.com/DanielOaks/ef8b21a25a4db5899015">gist</a>.</p>
+
+<hr />
 
 <p>This regex splits messages into groups differently than most other IRC regexes, and the match it produces does need to be processed before being used. Below, I explain the point and use of each matched group so you can use this effectively.</p>
 
@@ -243,27 +253,27 @@ $</code></pre>
 
 <h4 id="example-1">Example 1</h4>
 
-<ul>
-  <li>msg: <code class="highlighter-rouge">":coolguy EX #example 32 abcd"</code></li>
-  <li>group: <code class="highlighter-rouge">"#example 32 abcd"</code></li>
-  <li>params: <code class="highlighter-rouge">["#example", "32", "abcd"]</code></li>
-</ul>
+<pre>
+   msg: ":coolguy EX #example 32 abcd"
+ group: "#example 32 abcd"
+params: ["#example", "32", "abcd"]
+</pre>
 
 <h4 id="example-2">Example 2</h4>
 
-<ul>
-  <li>msg: <code class="highlighter-rouge">":coolguy EX #exam   43 acdc"</code></li>
-  <li>group: <code class="highlighter-rouge">"#exam   43 acdc"</code></li>
-  <li>params: <code class="highlighter-rouge">["#exam", "43", "acdc"]</code></li>
-</ul>
+<pre>
+   msg: ":coolguy EX #exam   43 acdc"
+ group: "#exam   43 acdc"
+params: ["#exam", "43", "acdc"]
+</pre>
 
 <h4 id="example-3">Example 3</h4>
 
-<ul>
-  <li>msg: <code class="highlighter-rouge">":coolguy PRIVMSG #exam :Hiya!"</code></li>
-  <li>group: <code class="highlighter-rouge">""</code></li>
-  <li>params (regular params only): <code class="highlighter-rouge">[]</code></li>
-</ul>
+<pre>
+   msg: ":coolguy PRIVMSG #exam :Hiya!"
+ group: ""
+params (regular params only): []
+</pre>
 
 <h3 id="trailing-parameter-optional">5. Trailing Parameter (optional)</h3>
 
@@ -282,41 +292,43 @@ $</code></pre>
 
 <h4 id="example-1-1">Example 1</h4>
 
-<ul>
-  <li>msg: <code class="highlighter-rouge">":coolguy EX #example 32 abcd :Hey dude!"</code></li>
-  <li>group: <code class="highlighter-rouge">"Hey dude!"</code></li>
-  <li>params: <code class="highlighter-rouge">["#example", "32", "abcd", "Hey dude!]</code></li>
-</ul>
+<pre>
+   msg: ":coolguy EX #example 32 abcd :Hey dude!"
+ group: "Hey dude!"
+params: ["#example", "32", "abcd", "Hey dude!"]
+</pre>
 
 <h4 id="example-2-1">Example 2</h4>
 
-<ul>
-  <li>msg: <code class="highlighter-rouge">":coolguy EX #exam   43 acdc :  "</code></li>
-  <li>group: <code class="highlighter-rouge">"  "</code></li>
-  <li>params: <code class="highlighter-rouge">["#exam", "43", "acdc", "  "]</code></li>
-</ul>
+<pre>
+   msg: ":coolguy EX #exam   43 acdc :  "
+ group: "  "
+params: ["#exam", "43", "acdc", "  "]
+</pre>
 
 <h4 id="example-3-1">Example 3</h4>
 
-<ul>
-  <li>msg: <code class="highlighter-rouge">":coolguy EX absd :"</code></li>
-  <li>group: <code class="highlighter-rouge">""</code></li>
-  <li>params: <code class="highlighter-rouge">["absd", ""]</code></li>
-</ul>
+<pre>
+   msg: ":coolguy EX absd :"
+ group: ""
+params: ["absd", ""]
+</pre>
 
 <h4 id="example-4">Example 4</h4>
 
-<ul>
-  <li>msg: <code class="highlighter-rouge">":coolguy EX #exam   43 acdc"</code></li>
-  <li>group: <code class="highlighter-rouge">&lt;does not exist&gt;</code></li>
-  <li>params: <code class="highlighter-rouge">["#exam", "43", "acdc"]</code></li>
-</ul>
+<pre>
+   msg: ":coolguy EX #exam   43 acdc"
+ group: &lt;does not exist&gt;
+params: ["#exam", "43", "acdc"]
+</pre>
 
 <hr />
 
 <h2 id="final-notes">Final Notes</h2>
 
 <p>Remember to combine the regular and trailing parameters, and to skip the regular params group entirely if it is an empty string. Remember to post-process the tags section as per the <a href="http://ircv3.net/specs/core/message-tags-3.2.html"><code class="highlighter-rouge">message-tags</code> spec</a>.</p>
+
+<p>Here is an <a href="https://regex101.com/r/lL5rW3/1">online example</a> of this regex matching IRC messages, and here is the raw regex and our sample IRC messages in a <a href="https://gist.github.com/DanielOaks/ef8b21a25a4db5899015">gist</a>.</p>
 
 <p>If you have any questions about this, feel free to <a href="/contact.html">contact me!</a></p>
 

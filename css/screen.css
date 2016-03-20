@@ -23,13 +23,14 @@ sup { vertical-align: super; }
 
 sub { vertical-align: sub; }
 
-code, code.regex { font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace; }
+pre, code, code.regex { font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace; }
 
-pre { font-size: 95%; padding: 1rem; border-radius: 0.5rem; background: #ffb; page-break-inside: avoid; }
+pre { font-size: 95%; padding: 1rem; border-radius: 0.5rem; background: #ffb; page-break-inside: avoid; max-width: 100%; overflow-x: auto; }
+pre + p > code.regex { display: block; margin-top: 1.5rem; }
 
 code.highlighter-rouge { display: inline-block; font-size: 95%; border-radius: 0.25rem; background: #ffb; padding: 0.2rem 0.4rem; margin: 0.05rem 0; }
 
-@media screen { hr { border: #507082 0.2rem solid; border-radius: 2rem; margin: 1.55rem auto; } }
+@media screen { hr { border: rgba(73, 109, 129, 0.58) 0.2rem solid; border-radius: 2rem; margin: 1.55rem auto; } }
 @media print { hr { display: none; } }
 
 h1 { font-size: 2rem; font-weight: bold; }
@@ -38,7 +39,7 @@ h2 { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.25rem; }
 
 h3 { font-size: 1.175rem; font-weight: bold; margin-top: 1.2rem; margin-bottom: 0.25rem; }
 
-h4 { font-size: 1.175rem; margin-top: 0.75rem; margin-bottom: 0.2rem; }
+h4 { font-size: 1.175rem; margin-top: 0.75rem; margin-bottom: 0.25rem; }
 
 ol, ul { margin: 1rem 0 1rem 2rem; }
 
