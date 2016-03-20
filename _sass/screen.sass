@@ -19,6 +19,7 @@ $delicious-font-stack: Delicious, Helvetica Neue, Arial, sans-serif
 $smallcaps-font-stack: Delicious-Small-Caps, Delicious, Helvetica Neue, Arial, sans-serif
 $body-font-stack: Helvetica Neue, Arial, sans-serif
 $copy-font-stack: Georgia, Times, Times New Roman, serif
+$blog-font-stack: "Helvetica Neue", Helvetica, Arial, sans-serif
 
 // overall
 html
@@ -300,6 +301,9 @@ body
                         display: none
                     .content .alt-text
                         display: block
+
+.cat-blog #content-wrap, .cat-blog #content-wrap > .inside p
+    font-family: $blog-font-stack
 
 #footer-wrap
     height: $footer-height

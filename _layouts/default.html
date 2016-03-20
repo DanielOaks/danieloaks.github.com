@@ -7,10 +7,13 @@
         <link href="{{ site.base_addr }}/fonts/delicious.css" rel="stylesheet" type="text/css" />
 
         <link href="{{ site.base_addr }}/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="{{ site.base_addr }}/css/syntax.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <link href="{{ site.base_addr }}/css/print.css" media="print" rel="stylesheet" type="text/css" />
         <!--[if IE]>
             <link href="{{ site.base_addr }}/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <![endif]-->
+
+        <script src="{{ site.base_addr }}/js/regex-colorizer.js"></script>
 
         <meta charset='utf-8'>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -40,7 +43,7 @@
             /* Google Analytics JS */
         </script>
     </head>
-    <body>
+    <body class="{% for cat in page.categories %}cat-{{ cat | slugify }} {% endfor %}">
         <div class="bg-stripe" id="content-stripe-1"></div>
         <div class="bg-stripe" id="content-stripe-2"></div>
         <div id="main-wrap">
