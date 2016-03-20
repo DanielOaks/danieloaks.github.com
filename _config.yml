@@ -17,7 +17,7 @@ paginate_path: page/:num
 permalink: /:title/
 
 # And building into custom directory
-highlighter: pygments
+highlighter: rouge
 markdown: kramdown
 
 # tabs on top of the page
