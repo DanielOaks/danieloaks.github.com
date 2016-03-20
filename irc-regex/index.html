@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+        <title>The Less-Wrong IRC Regex</title>
+        
+        <!-- Homepage CSS -->
+        <link href="/fonts/delicious.css" rel="stylesheet" type="text/css" />
+
+        <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="/css/syntax.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="/css/print.css" media="print" rel="stylesheet" type="text/css" />
+        <!--[if IE]>
+            <link href="/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <![endif]-->
+
+        <script src="/js/regex-colorizer.js"></script>
+
+        <meta charset='utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link rel="apple-touch-icon" sizes="57x57" href="/img/favicons/apple-touch-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/img/favicons/apple-touch-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/img/favicons/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/img/favicons/apple-touch-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/img/favicons/apple-touch-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/img/favicons/apple-touch-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/img/favicons/apple-touch-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/img/favicons/apple-touch-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon-180x180.png">
+        <link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="/img/favicons/favicon-194x194.png" sizes="194x194">
+        <link rel="icon" type="image/png" href="/img/favicons/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="/img/favicons/android-chrome-192x192.png" sizes="192x192">
+        <link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16">
+        <link rel="manifest" href="/img/favicons/manifest.json">
+        <link rel="shortcut icon" href="/img/favicons/favicon.ico">
+        <meta name="msapplication-TileColor" content="#ecf0ff">
+        <meta name="msapplication-TileImage" content="/img/favicons/mstile-144x144.png">
+        <meta name="msapplication-config" content="/img/favicons/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+
+        <script>
+            /* Google Analytics JS */
+        </script>
+    </head>
+    <body class="cat-code cat-blog ">
+        <div class="bg-stripe" id="content-stripe-1"></div>
+        <div class="bg-stripe" id="content-stripe-2"></div>
+        <div id="main-wrap">
+            <div id="header-wrap" class="wrap">
+                <div class="inside">
+                    <div class="top">
+                        <div class="logo"><a href="/">Daniel Oaks</a></div>
+                        <div class="tabs">
+                            
+                                
+                                <a class="tab portfolio" href="/categories/portfolio">Portfolio</a>
+                            
+                                
+                                <a class="tab active code" href="/categories/code">Code</a>
+                            
+                                
+                                <a class="tab design" href="/categories/design">Design</a>
+                            
+                                
+                                <a class="tab music" href="/categories/music">Music</a>
+                            
+                            <a class="tab contact" title="Daniel Oaks' Email Address" href="/contact">Contact</a>
+                        </div>
+                    </div>
+                    <div class="subtitle">
+
+                    </div>
+                </div>
+            </div>
+            <div id="subtitle-wrap" class="wrap code">
+                <div class="inside">
+                    
+                    
+                    <a href="/irc-regex/">The Less-Wrong IRC Regex</a>
+                    
+                    
+                    
+                    <a href="http://modern.ircdocs.horse">Modern IRC (WiP)</a>
+                    
+                    
+                    
+                    <a href="https://github.com/mammon-ircd/mammon">mammon</a>
+                    
+                    
+                    
+                    <a href="http://defs.ircdocs.horse">irc-defs</a>
+                    
+                    
+                    
+                </div>
+            </div>
+            <div id="content-wrap" class="wrap">
+                <div class="inside">
+                    <div class="head" style="border-bottom: rgb(170,230,222) 0.4rem solid; background-image: radial-gradient(rgb(250,255,251),rgb(244,248,255));">
+    
+    <h1 class="textlogo">The Less-Wrong IRC Regex</h1>
+    
+</div>
+
+
+
+<p>First off, regex alone can’t split arbitrary IRC messages into seperate parts ready to be consumed and evaluted by other code. It simply cannot do that with the restrictions placed upon it (particularly, not allowing recursive matches), despite most other IRC message-splitting regexes trying to do just that. That’s why I call this <strong>‘Less-Wrong’</strong>.</p>
+
+<p>I’ve created this regex to match and evaluate arbitrary IRC messages:</p>
+
+<p><code class="regex">
+^(?:@([^\r\n ]*) +|())(?::([^\r\n ]+) +|())([^\r\n ]+)(?: +([^:\r\n ]+[^\r\n ]*(?: +[^:\r\n ]+[^\r\n ]*)*)|())?(?: +:([^\r\n]*)| +())?[\r\n]*$
+</code></p>
+
+<p>This regex splits messages into groups differently than most other IRC regexes, and the match it produces does need to be processed before being used. Below, I explain the point and use of each matched group so you can use this effectively.</p>
+
+<p>You need to split messages on newlines before you pass them to this regex to be evaluated. Keep in mind that empty messages should be skipped as per the RFCs.</p>
+
+<hr />
+
+<h2 id="explained-regex">Explained Regex</h2>
+
+<p>This is the regex split up into parts to be explained. Newlines and comments are added, and sections are indented</p>
+
+<pre><code class="regex"># start of the line
+^
+
+# tags group
+(?:
+    # match the block of tags as specified in the message-tags spec
+    @([^\r\n ]*)
+    # strip trailing space characters here, because of how source and
+    # verb matching works
+     +
+
+    # if no tags, produce an empty group
+    |()
+)
+
+# source group
+(?:
+    # source starts with a colon and then a string
+    :([^\r\n ]+)
+    # strip trailing space characters here, because of how verb
+    # matching works
+     +
+
+    # if no source, produce an empty group
+    |()
+)
+
+# verb group
+(
+    # match the first string after the source group
+    [^\r\n ]+
+)
+
+# regular params group
+(?:
+    # match block of spaces here instead of inside the group
+    # because this makes the output group cleaner
+     +
+    # match the list of params
+    (
+        # ensure this isn't a trailing by not matching colon
+        # for first character of parameter
+        [^:\r\n ]+[^\r\n ]*
+        
+        # match subsequent parameters
+        (?:
+            # match spaces separating parameters
+             +
+            # match parameter value, same as above
+            [^:\r\n ]+[^\r\n ]*
+        )*
+    )
+
+    # if no regular params, produce an empty group
+    |()
+)? # optional match
+
+# trailing params group
+(?:
+    # match block of spaces
+     +
+    # colon marks the start of a trailing parameter
+    :
+    # match trailing param value, anything other than new message marker
+    ([^\r\n]*)
+
+    # if server has spaces at end of param list without a
+    # trailing colon, match it as a trailing parameter anyway.
+    # this goes AGAINST THE RFC, but it has been seen in the wild
+    # and makes sense to do
+    | +()
+
+    # explicitly do not produce an empty group here if no trailing
+    # parameter exists
+)? # optional match
+
+# match trailing \r and \n characters
+[\r\n]*
+
+# end of the line
+$</code></pre>
+
+<!-- *** fix bad vim highlighting ******** -->
+
+<hr />
+
+<h2 id="matched-groups">Matched Groups</h2>
+
+<p>Here are the matched groups for each message:</p>
+
+<ol>
+  <li><a href="http://ircv3.net/specs/core/message-tags-3.2.html">IRCv3 Message Tags</a></li>
+  <li>Source</li>
+  <li>Verb</li>
+  <li>Parameters</li>
+  <li>Trailing Parameter (optional)</li>
+</ol>
+
+<h3 id="ircv3-message-tags">1. IRCv3 Message Tags</h3>
+
+<p>This group matches the <a href="http://ircv3.net/specs/core/message-tags-3.2.html">IRCv3 Message Tags</a>, if any, that are sent with the message. These tags must be split and evaluated by the parser after receiving them, as specified in the <a href="http://ircv3.net/specs/core/message-tags-3.2.html">message-tags specification</a>.</p>
+
+<h3 id="source">2. Source</h3>
+
+<p>This group matches the source of the message. e.g., this may be <code class="highlighter-rouge">example.com</code>, <code class="highlighter-rouge">dan!~d@localhost</code>, etc.</p>
+
+<h3 id="verb">3. Verb</h3>
+
+<p>This group matches the verb of the message. e.g., <code class="highlighter-rouge">PRIVMSG</code>, <code class="highlighter-rouge">005</code>, <code class="highlighter-rouge">MODE</code>, etc.</p>
+
+<h3 id="parameters">4. Parameters</h3>
+
+<p>This group matches all the regular parameters of the message. The parser MUST split these parameters itself, as regex alone cannot split these properly.</p>
+
+<p>The blob of regular parameters is captured as-is from the server. These parameters are split by one (or more) space characters to receive the actual parameters. If this is an empty string, there are no regular parameters and this group should be skipped.</p>
+
+<p>For example, here is a list of messages and the contents of this group for them, as well as the actual split list of parameters:</p>
+
+<h4 id="example-1">Example 1</h4>
+
+<ul>
+  <li>msg: <code class="highlighter-rouge">":coolguy EX #example 32 abcd"</code></li>
+  <li>group: <code class="highlighter-rouge">"#example 32 abcd"</code></li>
+  <li>params: <code class="highlighter-rouge">["#example", "32", "abcd"]</code></li>
+</ul>
+
+<h4 id="example-2">Example 2</h4>
+
+<ul>
+  <li>msg: <code class="highlighter-rouge">":coolguy EX #exam   43 acdc"</code></li>
+  <li>group: <code class="highlighter-rouge">"#exam   43 acdc"</code></li>
+  <li>params: <code class="highlighter-rouge">["#exam", "43", "acdc"]</code></li>
+</ul>
+
+<h4 id="example-3">Example 3</h4>
+
+<ul>
+  <li>msg: <code class="highlighter-rouge">":coolguy PRIVMSG #exam :Hiya!"</code></li>
+  <li>group: <code class="highlighter-rouge">""</code></li>
+  <li>params (regular params only): <code class="highlighter-rouge">[]</code></li>
+</ul>
+
+<h3 id="trailing-parameter-optional">5. Trailing Parameter (optional)</h3>
+
+<p>This group is special in that it may not always exist. If it does exist, it means that the server did have a trailing parameter for this message. If it does not exist, there was no trailing parameter.</p>
+
+<p>If this group exists, it <strong>MUST</strong> be appended to the parameter list created by evaluating the previous group. It is treated <strong>EXACTLY THE SAME</strong> as a regular parameter. The reason for this is that these two messages are identical:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">:example.com PING 12345</code></li>
+  <li><code class="highlighter-rouge">:example.com PING :12345</code></li>
+</ul>
+
+<p>If you treat the trailing parameter differently than you treat regular parameters, <strong>things will break randomly</strong> as client and server software can output the last parameter of any message as either a regular or a trailing param.</p>
+
+<p>Here are a few examples of trailing parameters, and the final created param lists:</p>
+
+<h4 id="example-1-1">Example 1</h4>
+
+<ul>
+  <li>msg: <code class="highlighter-rouge">":coolguy EX #example 32 abcd :Hey dude!"</code></li>
+  <li>group: <code class="highlighter-rouge">"Hey dude!"</code></li>
+  <li>params: <code class="highlighter-rouge">["#example", "32", "abcd", "Hey dude!]</code></li>
+</ul>
+
+<h4 id="example-2-1">Example 2</h4>
+
+<ul>
+  <li>msg: <code class="highlighter-rouge">":coolguy EX #exam   43 acdc :  "</code></li>
+  <li>group: <code class="highlighter-rouge">"  "</code></li>
+  <li>params: <code class="highlighter-rouge">["#exam", "43", "acdc", "  "]</code></li>
+</ul>
+
+<h4 id="example-3-1">Example 3</h4>
+
+<ul>
+  <li>msg: <code class="highlighter-rouge">":coolguy EX absd :"</code></li>
+  <li>group: <code class="highlighter-rouge">""</code></li>
+  <li>params: <code class="highlighter-rouge">["absd", ""]</code></li>
+</ul>
+
+<h4 id="example-4">Example 4</h4>
+
+<ul>
+  <li>msg: <code class="highlighter-rouge">":coolguy EX #exam   43 acdc"</code></li>
+  <li>group: <code class="highlighter-rouge">&lt;does not exist&gt;</code></li>
+  <li>params: <code class="highlighter-rouge">["#exam", "43", "acdc"]</code></li>
+</ul>
+
+<hr />
+
+<h2 id="final-notes">Final Notes</h2>
+
+<p>Remember to combine the regular and trailing parameters, and to skip the regular params group entirely if it is an empty string. Remember to post-process the tags section as per the <a href="http://ircv3.net/specs/core/message-tags-3.2.html"><code class="highlighter-rouge">message-tags</code> spec</a>.</p>
+
+<p>If you have any questions about this, feel free to <a href="/contact.html">contact me!</a></p>
+
+<script>
+    RegexColorizer.addStyleSheet();
+    RegexColorizer.colorizeAll();
+</script>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div id="footer-wrap" class="wrap">
+            <div class="inside">
+                Copyright &copy; 2016 Daniel Oaks
+            </div>
+        </div>
+    </body>
+</html>
