@@ -18,7 +18,7 @@ module CurrentCategory
         end
       end
 
-      for post in site.posts
+      for post in site.posts.docs
         if not post.data.key? 'current_category'
           cats = post.data['category'] || post.data['categories']
           if cats.kind_of?(Array)
