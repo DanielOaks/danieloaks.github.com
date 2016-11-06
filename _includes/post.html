@@ -8,7 +8,7 @@
         <img class="logo" src="{{ site.base_addr }}{{ post.head_logo }}"/>
     {% else %}
         <div class="wordmark" title="{{ post.title }}">
-            {{ post.title }}
+            {% if post.display_title %}{{ post.display_title }}{% else %}{{ post.title }}{% endif %}
         </div>
     {% endif %}
     <div class="content">

@@ -1,7 +1,9 @@
 ---
 layout: project
-title: Modern IRC (WiP)
+title: Modern IRC Specifications
+display_title: "&nbsp; Modern IRC &nbsp; Specifications"
 categories:
+    - portfolio
     - code
 
 search_desc: code, irc
@@ -16,10 +18,10 @@ links:
 
 screenshots:
     -
-        title: "Modern IRC Document"
+        title: "Modern IRC Documents"
         src: "/img/screenshots/modern-irc_1.png"
         url: "http://modern.ircdocs.horse/#protocol-structure"
 
 post_layout: leftright
-short_description: The Modern IRC document is an attempt to write a descriptive (rather than prescriptive) replacement to RFC1459/2812 which reflects how the IRC client protocol operates today. It is a work-in-progress document.
+short_description: The Modern IRC documents are an attempt to describe how the IRC client protocol works today. The primary specification is a replacement to RFC1459/2812 – others specify formatting and CTCP.
 ---
