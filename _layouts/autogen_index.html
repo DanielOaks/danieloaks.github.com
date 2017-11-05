@@ -5,7 +5,7 @@ layout: default
 {% for datepost in site.categories[page.category] %}
     {% capture currentdate %}{{ datepost.date | date: "%A, %B %d, %Y" }}{% endcapture %}
     {% if lastdate == currentdate %}{% else %}
-        {% for weight in (1...site.max_weight) %}
+        {% for weight in (1..site.max_weight) %}
             {% for post in site.categories[page.category] %}
                 {% capture thispostdate %}{{ post.date | date: "%A, %B %d, %Y" }}{% endcapture %}
                 {% if thispostdate == currentdate %}
